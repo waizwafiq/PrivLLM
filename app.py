@@ -14,7 +14,7 @@ from pdfminer.high_level import extract_text
 UPLOAD_FOLDER = 'uploaded_files/'
 
 def main():
-    st.set_page_config(layout="wide", initial_sidebar_state="collapsed", page_title="BlurredAI", page_icon="https://media.discordapp.net/attachments/713817450130571416/1208719786041810984/icon.png?ex=65e44f05&is=65d1da05&hm=080bc21bdb34c2fcc95dc6e6bfbc7332223822f3fc1b536762bfc2df879eb3a0&=&format=webp&quality=lossless&width=1376&height=1376")
+    st.set_page_config(layout="wide", initial_sidebar_state="collapsed", page_title="PrivLLM", page_icon="https://media.discordapp.net/attachments/713817450130571416/1208719786041810984/icon.png?ex=65e44f05&is=65d1da05&hm=080bc21bdb34c2fcc95dc6e6bfbc7332223822f3fc1b536762bfc2df879eb3a0&=&format=webp&quality=lossless&width=1376&height=1376")
     st.markdown(
         """
         <style>
@@ -95,8 +95,6 @@ def main():
 
     # First panel covering half the page
     with col0:
-        # st.title("BlurredAI")
-        st.image("https://media.discordapp.net/attachments/713817450130571416/1208728527323668520/cover.png?ex=65e4572a&is=65d1e22a&hm=7f169f9aa186d86b8814c0dd124c3486e2db7280886fdf56d9dbf43ac4643e20&=&format=webp&quality=lossless&width=1410&height=452")
         st.caption("A privacy-first inference for any Large Language Model")
         private_data = st.text_area("Text your private data here", height=300)
         uploaded_file = st.file_uploader("Choose a file")
@@ -111,9 +109,9 @@ def main():
             # Display chat messages from history on app rerun
             for message in st.session_state.box1messages:
                 if (message["role"] == "user"):
-                    with st.chat_message(message["role"], avatar="https://github.com/rchtgpt.png"):
+                    with st.chat_message(message["role"], avatar="https://avatars.githubusercontent.com/u/63910911?v=4"):
                         st.markdown(message["content"])
-                if (message["role"] == "blurredAI"):
+                if (message["role"] == "privLLM"):
                     with st.chat_message("assistant", avatar="https://media.discordapp.net/attachments/713817450130571416/1208709666461323305/logo.jpeg?ex=65e44599&is=65d1d099&hm=ac498b5d773ee33297fa4932964e5f6dd146d14fe2250026967cde3e3f60e16c&=&format=webp&width=1006&height=1008"):
                         st.markdown(message["content"])
             
@@ -124,7 +122,7 @@ def main():
                 file_path = st.session_state.file_path
                 st.session_state.running_state = "blurring"
                 if(st.session_state.currentPrompt != ""):
-                    with st.chat_message("user", avatar="https://github.com/rchtgpt.png"):
+                    with st.chat_message("user", avatar="https://avatars.githubusercontent.com/u/63910911?v=4"):
                         show_text = f'**Instruction:** {prompt}\n\n'
                         st.write_stream(stream_data(f'**Instruction:** {prompt}\n\n', stop_time = 0))
                         if (private_data != ""):
@@ -148,9 +146,9 @@ def main():
                     userInputted = True
                     st.session_state.currentPrompt = prompt
             if (st.session_state.unblurredData != "" and st.session_state.running_state == "finalizing"):
-                st.session_state.box1messages.append({"role": "blurredAI", "content": "**Final Response (Powered by BlurredAI)**\n" + st.session_state.unblurredData})
+                st.session_state.box1messages.append({"role": "privLLM", "content": "**Final Response (Powered by PrivLLM)**\n" + st.session_state.unblurredData})
                 with st.chat_message("assistant", avatar="https://media.discordapp.net/attachments/713817450130571416/1208709666461323305/logo.jpeg?ex=65e44599&is=65d1d099&hm=ac498b5d773ee33297fa4932964e5f6dd146d14fe2250026967cde3e3f60e16c&=&format=webp&width=1006&height=1008"):
-                    st.write_stream(stream_data("**Final Response (Powered by BlurredAI)**"))
+                    st.write_stream(stream_data("**Final Response (Powered by PrivLLM)**"))
                     st.write_stream(stream_data(st.session_state.unblurredData))
                 st.session_state.running_state = "done"
         if prompt := st.chat_input("Ask me a question about your data (privately)..."):
@@ -175,7 +173,7 @@ def main():
             st.session_state.running_state = "reblurring"
         else:
             st.session_state.running_state = "blurred"
-            st.session_state.box2messages.append({"role": "blurredAI", "content": f"**Here is what I'm going to send to the remote server, with sensitive information redacted:**\n\n**Instruction:** {st.session_state.redactedInstruction}\n\n**Redacted Data:** {st.session_state.redacted}"})
+            st.session_state.box2messages.append({"role": "privLLM", "content": f"**Here is what I'm going to send to the remote server, with sensitive information redacted:**\n\n**Instruction:** {st.session_state.redactedInstruction}\n\n**Redacted Data:** {st.session_state.redacted}"})
 
         st.session_state.stage = i
 
@@ -191,9 +189,9 @@ def main():
                 for message in st.session_state.box2messages:
                     print("message", message)
                     if (message["role"] == "user"):
-                        with st.chat_message(message["role"], avatar="https://github.com/rchtgpt.png"):
+                        with st.chat_message(message["role"], avatar="https://avatars.githubusercontent.com/u/63910911?v=4"):
                             st.markdown(message["content"])
-                    if (message["role"] == "blurredAI"):
+                    if (message["role"] == "privLLM"):
                         with st.chat_message("assistant", avatar="https://media.discordapp.net/attachments/713817450130571416/1208709666461323305/logo.jpeg?ex=65e44599&is=65d1d099&hm=ac498b5d773ee33297fa4932964e5f6dd146d14fe2250026967cde3e3f60e16c&=&format=webp&width=1006&height=1008"):
                             st.markdown(message["content"])
                     if (message["role"] == "llm"):

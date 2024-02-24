@@ -1,8 +1,8 @@
 import streamlit as st
 
-st.title('Learn about BlurredAI!⚡')
+st.title('Learn about PrivLLM!')
 
-with st.expander('What is this app about?'):
+with st.expander('Who created this app?'):
     st.write('''
-    We are a team of 3 Computer Science researchers who care deeply about privacy. Yap yap yap yap.
+    Waiz Wafiq, an undergraduate in Computer Science (AI) who has a passion in privacy-preserving AI solutions, spearheaded the creation of the PrivLLM project.
     ''')

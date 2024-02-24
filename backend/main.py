@@ -84,7 +84,7 @@ def UnblurResponse(remote_response="",
 
 
 if __name__ == '__main__':
-    instruction, output = user_input(instruction = "Can you give me some high-level insights from the following CSV file between salary and created revenue?", data_str = "", file_path = "/Users/xiqiao/Documents/_hacker2/BlurredAI/uploaded_files/test.csv")    
+    instruction, output = user_input(instruction = "Can you give me some high-level insights from the following CSV file between salary and created revenue?", data_str = "", file_path = "./test.csv")    
     print("\n===instruction===")
     print(instruction)
     print("\n===output===")
